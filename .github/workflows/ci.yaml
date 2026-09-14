@@ -5,6 +5,7 @@
 #   1. IAM に GitHub の OIDC プロバイダを登録する
 #   2. ma2-github-actions-role を作る（信頼ポリシーで自分のリポジトリだけを許可）
 #   3. GitHub リポジトリの Secrets に AWS_ROLE_ARN を登録する
+#      （ARN でない場合は AWS_ACCOUNT_ID も登録する）
 name: CI
 
 on:
@@ -42,7 +43,7 @@ jobs:
       - name: AWS の認証（OIDC・アクセスキー不要）
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: ${{ startsWith(secrets.AWS_ROLE_ARN, 'arn:') && secrets.AWS_ROLE_ARN || format('arn:aws:iam::{0}:role/{1}', secrets.AWS_ACCOUNT_ID, secrets.AWS_ROLE_ARN) }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: ECR にログイン
