@@ -43,7 +43,7 @@ jobs:
       - name: AWS の認証（OIDC・アクセスキー不要）
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ startsWith(secrets.AWS_ROLE_ARN, 'arn:aws:iam::') && secrets.AWS_ROLE_ARN || format('arn:aws:iam::{0}:role/{1}', secrets.AWS_ACCOUNT_ID, secrets.AWS_ROLE_ARN) }}
+          role-to-assume: ${{ startsWith(secrets.AWS_ROLE_ARN, 'arn:') && secrets.AWS_ROLE_ARN || format('arn:aws:iam::{0}:role/{1}', secrets.AWS_ACCOUNT_ID, secrets.AWS_ROLE_ARN) }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: ECR にログイン
