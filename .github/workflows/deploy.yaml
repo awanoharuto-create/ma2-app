@@ -80,8 +80,6 @@ jobs:
           infrastructure-role-arn: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/ecsInfrastructureRoleForExpressServices
           container-port: 5000
           health-check-path: /health
-          # 既存VPCの3つのAZを明示（デフォルトサブネットに依存しない）
-          subnets: subnet-0e7e86d9a3c7b7743,subnet-001fcab2ce19768de,subnet-037e704c2851ebc03
 
       # 上の Action は待ち時間が15分を超えると「警告だけ出して成功」で終わり、
       # ロールバック（ROLLBACK_*）も失敗と判定しない。最終状態をここで確かめる。
