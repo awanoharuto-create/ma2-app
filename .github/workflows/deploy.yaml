@@ -3,7 +3,7 @@
 #
 # 事前準備（スライド 19〜20 ページ）:
 #   - 第5回で作った ma2-github-actions-role に、ECS デプロイ用の権限を追加する
-#   - GitHub の Secrets に AWS_ROLE_ARN（第5回で登録済み）と AWS_ACCOUNT_ID を登録する
+#   - GitHub の Secrets に AWS_ACCOUNT_ID を登録する
 name: CI/CD
 
 on:
@@ -44,7 +44,7 @@ jobs:
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/ma2-github-actions-role
           aws-region: ${{ env.AWS_REGION }}
 
       - id: login-ecr
@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/ma2-github-actions-role
           aws-region: ${{ env.AWS_REGION }}
 
       - id: deploy
